@@ -8,6 +8,9 @@ python_version = "3.11"
 
 [packages]
 cowsay = "*"
+fastapi = {extras = ["all"], version = "*"}
+pydantic = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 black = "==22.3.0"
