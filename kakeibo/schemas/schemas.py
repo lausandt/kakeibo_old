@@ -1,21 +1,54 @@
+from enum import Enum
 from typing import Sequence
 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel  # HttpUrl not supported by sqlite
 
 
-class Recipe(BaseModel):
+class Period(str, Enum):
+    daily: str = "Daily"
+    weekly: str = "Weekly"
+    monthly: str = "Monthly"
+    quarterly: str = "Quarterly"
+    yearly: str = "Yearly"
+
+
+class EntryBase(BaseModel):
+    title: str
+    amount: int | float
+    description: str
+    period: Period | None
+    url: str | None
+
+
+class EntryCreate(EntryBase):
+    pass
+
+
+class Entry(EntryBase):
     id: int
-    label: str
-    source: str
-    url: HttpUrl
+    owner_id: int
+
+    class Config:
+        from_attributes = True
 
 
-class RecipeSearchResults(BaseModel):
-    results: Sequence[Recipe]
+class EntriesSearchResults(BaseModel):
+    results: Sequence[Entry]
 
 
-class RecipeCreate(BaseModel):
-    label: str
-    source: str
-    url: HttpUrl
-    submitter_id: int
+class UserBase(BaseModel):
+    email: str
+
+
+class UserCreate(UserBase):
+    password: str
+
+
+class User(UserBase):
+    id: int
+    is_active: bool
+    is_super_user: bool
+    items: list[Entry] = []
+
+    class Config:
+        from_attributes = True
