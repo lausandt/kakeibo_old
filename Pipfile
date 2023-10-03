@@ -11,6 +11,7 @@ cowsay = "*"
 fastapi = {extras = ["all"], version = "*"}
 pydantic = "*"
 sqlalchemy = "*"
+python-multipart = "*"
 
 [dev-packages]
 black = "==22.3.0"
@@ -20,3 +21,4 @@ mypy = "*"
 pre-commit = "*"
 pytest = "*"
 pytest-cov = "*"
+pytest-mock = "*"
